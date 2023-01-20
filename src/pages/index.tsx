@@ -3,6 +3,8 @@ import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import About from "@/components/About";
 import WorkExperience from "@/components/Experience/WorkExperience";
+import Skills from "@/components/Skills/Skills";
+import Projects from "@/components/Projects";
 
 export default function Home() {
   return (
@@ -11,26 +13,25 @@ export default function Home() {
         <title>Jorge's Portfolio</title>
       </Head>
       <Header />
-      {/* Hero section */}
+      
       <section id="hero" className="snap-start">
         <Hero />
       </section>
 
-      {/* About */}
       <section id="about" className="snap-center">
         <About />
       </section>
 
-      {/* Work Experience  */}
       <section id="experience" className="snap-center">
         <WorkExperience />
       </section>
 
-      {/* Skills */}
-      <section id="skills" className="snap-center"></section>
+      <section id="skills" className="snap-start">
+        <Skills />
+      </section>
 
-      {/* Projects */}
-      <section id="projects" className="snap-center"></section>
+      <section id="projects" className="snap-start"></section>
+      <Projects /> 
 
       {/* Contact */}
     </div>
