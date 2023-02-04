@@ -9,15 +9,31 @@ import Contact from "@/components/Contact";
 import Link from "next/link";
 import ProfilePicture from "../../public/Jorge_Carrera.jpeg";
 import Image from "next/image";
+import { GetStaticProps } from "next";
+import { PageInfo, Experience, Project, Skill, Social } from "typings";
+import { fetchPageInfo } from "utilities/fetchPageInfo";
+import { fetchExperiences } from "utilities/fetchExperiences";
+import { fetchSkills } from "utilities/fetchSkills";
+import { fetchProjects } from "utilities/fetchProjects";
+import { fetchSocial } from "utilities/fetchSocials";
+
+type Props = {
+  pageInfo : PageInfo;
+  experiences: Experience[];
+  skills: Skill[];
+  projects: Project[];
+  socials: Social[];
+};
 
 
-export default function Home() {
+export default function Home({pageInfo, experiences, skills, projects, socials}: Props) {
   return (
     <div className="bg-[rgb(36,36,36)] text-white h-screen snap-y snap-mandatory overflow-y-scroll overflow-x-hidden z-0 scrollbar scrollbar-track-gray-400/20 scrollbar-thumb-[#F7AB0A]/80">
       <Head>
         <title>Jorge's Portfolio</title>
       </Head>
-      <Header />
+
+      <Header socials={socials} />
 
       <section id="hero" className="snap-start">
         <Hero />
@@ -32,7 +48,7 @@ export default function Home() {
       </section>
 
       <section id="skills" className="snap-start">
-        <Skills />
+        <Skills skills={skills} />
       </section>
 
       <section id="projects" className="snap-start">
@@ -59,3 +75,25 @@ export default function Home() {
   );
 }
 
+
+export const getStaticProps: GetStaticProps<Props> = async () => {
+  const pageInfo:PageInfo = await fetchPageInfo();
+  const experiences:Experience[] = await fetchExperiences();
+  const skills:Skill[] = await fetchSkills();
+  const projects:Project[] = await fetchProjects();
+  const socials:Social[] = await fetchSocial();
+
+  return {
+    props: {
+      pageInfo,
+      experiences,
+      skills,
+      projects,
+      socials,
+    },
+    // Next.js will attempt to regenerate the page:
+    // When a request comes in
+    // At most, once every 10 seconds (next ISR)
+    revalidate: 60,
+  }
+}
