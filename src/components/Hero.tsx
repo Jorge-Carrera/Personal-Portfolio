@@ -2,15 +2,20 @@ import Image from "next/image";
 import React from "react";
 import { Cursor, useTypewriter } from "react-simple-typewriter";
 import BackgroundCircles from "./BackgroundCircles";
-import ProfilePicture from "../../public/Jorge_Carrera.jpeg"
 import Link from "next/link";
+import ProfilePicture from "../../public/Jorge_Carrera.jpeg";
+import { PageInfo } from "typings";
+// import urlFor from "urlFor";
 
-type Props = {};
 
-function Hero({}: Props) {
+type Props = {
+  pageInfo: PageInfo
+};
+
+function Hero({pageInfo}: Props) {
   const [text, count] = useTypewriter({
     words: [
-      "Hi, My Name is Jorge",
+      `Hi, My Name is ${pageInfo?.name}`,
       "A-guy-who-loves-Gaming.tsx",
       "<ButLovesToCodeMore />",
     ],
@@ -18,6 +23,7 @@ function Hero({}: Props) {
     delaySpeed: 2000,
   });
 
+  
   
 
   return (
@@ -29,11 +35,12 @@ function Hero({}: Props) {
           priority
           alt="Jorge Carrera"
           className="object-cover rounded-full"
+          
         />
       </div>
       <div className="z-20">
         <h2 className="text-sm uppercase text-gray-500 pb-2 tracking-[15px]">
-          Software Engineer
+          {pageInfo?.role}
         </h2>
         <h1 className="text-5xl lg:text-6xl font-semibold px-10 ">
           <span className="mr-3">{text}</span>
